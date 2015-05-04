@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="sportsStore">
+<head>
+    <title>Sports Store</title>
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular-route.js"></script>
+    <script src="Scripts/i18n/angular-locale_en-gb.js"></script>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.css" rel="stylesheet" />
+    <script>
+        var app = angular.module("sportsStore", ["ngRoute", "customFilters", "cart"]);
+
+        app.config(['$routeProvider',
+          function ($routeProvider) {
+              $routeProvider.
+                    when('/complete', {
+                        templateUrl: '/app/views/thankYou.html'
+                    }).
+                    when('/placeOrder', {
+                        templateUrl: '/app/views/placeOrder.html'
+                    }).
+                    when('/checkout', {
+                        templateUrl: '/app/views/checkoutSummary.html'
+                    }).
+                    when('/products', {
+                        templateUrl: '/app/views/productList.html'
+                    }).
+                    otherwise({
+                        redirectTo: '/products'
+                    });
+          }]);
+
+    </script>
+    <script src="app/controllers/sportsStore.js"></script>
+    <script src="app/controllers/productListController.js"></script>
+    <script src="app/controllers/checkoutController.js"></script>
+    <script src="app/filters/customFilters.js"></script>
+    <script src="app/components/cart/cart.js"></script>
+</head>
+<body ng-controller="sportsStoreCtrl">
+    <div class="navbar navbar-inverse">
+        <a class="navbar-brand" href="#/products">Sports Store</a>
+        <cart-summary />
+    </div>
+    <div class="alert alert-danger" ng-show="data.error">
+        Error({{data.error.status}}). The product data was not loaded.
+        <a href="/app.html" class="alert-link">Click here to try again</a>
+    </div>
+    <ng-view />
+    <!--<ng-include src="'/app/views/productList.html'"/>-->
+</body>
+</html>
